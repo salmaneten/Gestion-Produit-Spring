@@ -9,10 +9,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -34,11 +35,37 @@ public class ProduitController {
 
         return "produits";
     }
- @RequestMapping(value = "/delete", method = RequestMethod.GET)
+        @RequestMapping(value = "/delete", method = RequestMethod.GET)
         public String delete(Long id, int page, int size, String mc){
+            Produit p = produitRepository.getById(id);
+            produitRepository.delete(p);
+
+            return "redirect:/index?page="+page+"&size="+size+"&mc="+mc;
+    }
+
+        @RequestMapping(value ="/form", method = RequestMethod.GET)
+        public String formProduit(Model model){
+            model.addAttribute("produit",new Produit());
+            return "formProduit";
+    }
+        @RequestMapping(value = "/save", method = RequestMethod.POST)
+        public String save(Model model ,@Valid @ModelAttribute("produit") Produit produit, BindingResult bindingResult){
+            if(bindingResult.hasErrors())
+            {
+
+                return "formProduit";
+            }
+            else
+            {
+                produitRepository.save(produit);
+                return "confirmation";
+            }
+    }
+    @RequestMapping(value ="/edit", method = RequestMethod.GET)
+    public String editProduit(Model model, Long id){
         Produit p = produitRepository.getById(id);
-        produitRepository.delete(p);
-        return "redirect:/index?page="+page+"&size="+size+"&mc="+mc;
+        model.addAttribute("produit",p);
+        return "editProduit";
     }
 
 }

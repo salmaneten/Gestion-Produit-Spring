@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+        <div class="container" layout:fragment="content">
+          <div class="card">
+              <div class="card-header">Confirmation</div>
+
+              <div class="card-body">
+
+                      <div class="form-group">
+                          <label class="my-2">ID : </label>
+                          <label th:text="${produit.id}"></label>
+                      </div>
+                      <div class="form-group">
+                          <label class="my-2">Désignation : </label>
+                          <label th:text="${produit.designation}"></label>
+                      </div>
+                      <div class="form-group">
+                          <label class="my-2">Quantité : </label>
+                          <label th:text="${produit.quantite}"></label>
+                      </div>
+                      <div class="form-group">
+                          <label class="my-2">Prix : </label>
+                          <label th:text="${produit.prix}"></label>
+                      </div>
+
+              </div>
+          </div>
+        </div>
+
+</body>
+</html>

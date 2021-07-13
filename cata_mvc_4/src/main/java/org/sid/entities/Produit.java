@@ -1,14 +1,26 @@
 package org.sid.entities;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 //ANOTATION JPA PUISQUE ON A UNE BASE DE DONNEES RELATIONNEL
 @Entity
 public class Produit implements Serializable {
     @Id @GeneratedValue
     private  Long id;
+    @NotBlank(message = "designation doit pas être vide")
+    @Size(min=4, max=15)
+    private String designation;
+
+    private  int quantite;
+    @DecimalMin(value = "100", message = "le prix doit être supérieur à 100")
+    private double prix;
 
     public Long getId() {
         return id;
@@ -42,9 +54,7 @@ public class Produit implements Serializable {
         this.prix = prix;
     }
 
-    private String designation;
-    private  int quantite;
-    private double prix;
+
     public Produit(){
         super();
     }

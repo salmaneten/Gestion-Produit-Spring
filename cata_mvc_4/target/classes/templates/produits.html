@@ -1,18 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
 <head>
     <meta charset="UTF-8">
     <title>Produits</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-    <div class="container">
+    <div class="container" layout:fragment="content">
         <form th:action="@{index}" method="get">
             <label>Mot Clé :</label>
             <input type="text" name="mc" th:value="${mc}">
             <button class="btn btn-primary">Chercher</button>
         </form>
-    </div>
+
     <div class="container">
         <h3>Liste des Produits</h3>
         <table class="table">
@@ -27,7 +30,8 @@
                     <td th:text="${p.designation}"></td>
                     <td th:text="${p.prix}"></td>
                     <td th:text="${p.quantite}"></td>
-                    <td><a th:href="@{delete(id=${p.id}, page=${pageCourante}, size=${size}, mc=${mc})}">Delete</a></td>
+                    <td><a th:href="@{edit(id=${p.id})}">Edit</a></td>
+                    <td><a th:onclick="return confirm('Etes vous sûr?')" th:href="@{delete(id=${p.id}, page=${pageCourante}, size=${size}, mc=${mc})}">Delete</a></td>
 
                 </tr>
             </tbody>
@@ -40,6 +44,7 @@
                 </li>
             </ul>
         </div>
+    </div>
     </div>
 </body>
 </html>
